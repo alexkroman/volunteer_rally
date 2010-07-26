@@ -1,6 +1,6 @@
 <?php
 
-// $Id$
+// $Id: cck_signup_group.admin.inc,v 1.5 2010/07/26 23:41:06 jhedstrom Exp $
 
 /**
  * @file

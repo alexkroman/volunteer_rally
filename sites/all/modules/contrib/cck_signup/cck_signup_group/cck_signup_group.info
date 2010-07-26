@@ -1,7 +1,13 @@
-; $Id$
+; $Id: cck_signup_group.info,v 1.5 2010/07/26 23:41:06 jhedstrom Exp $
 name = Group sign-up
 description = Sign-up groups of people for events
 core = 6.x
 dependencies[] = cck_signup
 dependecnies[] = number
 package = "CCK Sign-up"
+; Information added by drupal.org packaging script on 2010-07-26
+version = "6.x-1.0-alpha3"
+core = "6.x"
+project = "cck_signup"
+datestamp = "1280187903"
+

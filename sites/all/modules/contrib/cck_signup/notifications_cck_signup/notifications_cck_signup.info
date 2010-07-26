@@ -1,7 +1,13 @@
-; $Id$
+; $Id: notifications_cck_signup.info,v 1.4 2010/07/26 23:41:06 jhedstrom Exp $
 name = CCK Sign-up notifications
 description = Notifications for sign-ups
 core = 6.x
 package = Notifications
 dependencies[] = cck_signup
 dependencies[] = notifications
+; Information added by drupal.org packaging script on 2010-07-26
+version = "6.x-1.0-alpha3"
+core = "6.x"
+project = "cck_signup"
+datestamp = "1280187903"
+

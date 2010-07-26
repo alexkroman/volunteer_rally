@@ -1,6 +1,12 @@
-; $Id$
+; $Id: cck_signup_group_confirmation.info,v 1.5 2010/07/26 23:41:06 jhedstrom Exp $
 name = CCK Signup Group Confirmation
 description = Allows for confirmation of attendance of a group event or shift.
 package = "CCK Sign-up"
 core = 6.x
 dependencies[] = cck_signup_group
+; Information added by drupal.org packaging script on 2010-07-26
+version = "6.x-1.0-alpha3"
+core = "6.x"
+project = "cck_signup"
+datestamp = "1280187903"
+

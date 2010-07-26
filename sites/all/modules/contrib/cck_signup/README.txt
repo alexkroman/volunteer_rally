@@ -1,4 +1,4 @@
-// $Id$
+// $Id: README.txt,v 1.2 2010/07/26 23:41:06 jhedstrom Exp $
 
 The CCK Signup module is an alternative to the Signup module [1]. They
 primary difference is that this module allows the signups themselves
