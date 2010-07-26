@@ -1,0 +1,28 @@
+diff --git includes/calendar.inc includes/calendar.inc
+index d06656a..7a53651 100644
+--- includes/calendar.inc
++++ includes/calendar.inc
+@@ -160,6 +160,10 @@ function calendar_build_day($curday, $view, $items) {
+         foreach ($hour as $key => $item) {
+           $count++;
+           $types[$item->type] = $item;
++          
++          // Add a delta to each item for theming perposes (makes it possible to add even/odd styles for example)
++          $item->delta = $count;
++          
+           if (!$view->date_info->mini && ($max_events == CALENDAR_SHOW_ALL || $count <= $max_events || ($count > 0 && $max_events == CALENDAR_HIDE_ALL))) {
+             // Theme the item here unless this is a 'Day' or 'Week' view.
+             // Day and week views need to do more processing before rendering
+diff --git theme/calendar-month-node.tpl.php theme/calendar-month-node.tpl.php
+index 6879fff..5cfcf08 100644
+--- theme/calendar-month-node.tpl.php
++++ theme/calendar-month-node.tpl.php
+@@ -38,7 +38,7 @@
+  * @see template_preprocess_calendar_month_node.
+  */
+ ?>
+-<div class="view-item view-item-<?php print $view->name ?> view-item-<?php print $zebra; ?>">
++<div class="view-item view-item-<?php print $view->name ?> view-item-<?php print ($node->delta %2 == 0) ? 'even' : 'odd'; ?>">
+   <div class="<?php print $class; ?>" id="<?php print $node->date_id ?>">
+     <?php print theme('calendar_stripe_stripe', $node); ?>
+     <?php foreach ($fields as $field): ?>

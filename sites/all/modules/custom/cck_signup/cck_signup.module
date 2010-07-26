@@ -1,0 +1,154 @@
+<?php
+
+// $Id$
+
+/**
+ * @file
+ * CCK Signup module.
+ */
+
+/**
+ * Implementation of hook_form_FORM_ID_alter().
+ */
+function cck_signup_form_node_type_form_alter(&$form, $form_state) {
+  module_load_include('admin.inc', 'cck_signup');
+  _cck_signup_form_node_type_form_alter($form, $form_state);
+}
+
+/**
+ * Implementation of hook_form_alter().
+ *
+ * Add a validator to any node type that is being used as a sign-up node.
+ */
+function cck_signup_form_alter(&$form, $form_state, $form_id) {
+  if (!empty($form['type']['#value'])) {
+    if ($form_id == $form['type']['#value'] .'_node_form'
+      && variable_get('cck_signup_signup_type_' . $form['type']['#value'], FALSE)
+      && !in_array('_cck_signup_validate_signup_node', $form['#validate'])) {
+        $form['#validate'][] = '_cck_signup_validate_signup_node';
+    }
+  }
+}
+
+/**
+ * Implementation of hook_link_alter().
+ */
+function cck_signup_link_alter(&$links, $node) {
+  // @TODO Check if user already has a sign-up record and re-write
+  // nodereference_url links to edit sign-up record.
+}
+
+/**
+ * Implementation of hook_perm().
+ */
+function cck_signup_perm() {
+  return array(
+    'override cck signup restrictions',
+  );
+}
+
+/**
+ * Validate node types that are being used as a sign-up.
+ *
+ * - Don't allow sign-ups to be added /after/ an event unless user has
+ *   appropriate override permission.
+ *
+ * - Don't allow sign-ups to be added to events with closed registration.
+ *
+ * - Don't allow a user to have more than one sign-up per event.
+ */
+function _cck_signup_validate_signup_node($form, &$form_state) {
+  $values = $form_state['values'];
+  $type = $values['type'];
+  $field_name = variable_get('cck_signup_signup_type_' . $type, FALSE);
+  $override = user_access('override cck signup restrictions');
+
+  $event = node_load($values[$field_name][0]['nid'], FALSE);
+
+  if ($check_status = variable_get('cck_signup_field_status_' . $event->type, FALSE)) {
+    // Simple status check.
+    $status = $event->{$check_status}[0]['value'];
+    if (!$status && !$override) {
+      form_set_error($field_name, t('Sign-ups are closed for %title', array('%title' => $event->title)));
+    }
+  }
+
+  if ($check_date = variable_get('cck_signup_field_date_' . $event->type, FALSE)) {
+    // Check for date in the past.
+    $event_date = date_make_date($event->{$check_date}[0]['value']);
+    $now = date_now();
+    if ($event_date <= $now && !$override) {
+      form_set_error($field_name, t('Sign-ups are closed for %title, as it has already happened.', array('%title' => $event->title)));
+    }
+  }
+
+  // @TODO disallow multiple sign-up nodes per event.
+  // @TODO check capacity
+
+  // Allow other modules to easily validate event sign-ups.
+  foreach (module_implements('cck_signup_validate') as $module) {
+    $function = $module . '_cck_signup_validate';
+    $function($type, $event, $form_state);
+  }
+}
+
+/**
+ * Get the remaining capacity for an event.
+ */
+function cck_signup_get_remaining_capacity($event) {
+  $capacity_field = variable_get('cck_signup_field_capacity_' . $event->type, FALSE);
+  if (!$capacity_field) {
+    return;
+  }
+  $capacity = $event->{$capacity_field}[0]['value'];
+  $signup_field = variable_get('cck_signup_field_' . $event->type, FALSE);
+  $types = cck_signup_get_signup_types($signup_field);
+
+  $signups = array();
+  foreach ($types as $type) {
+    $field = content_fields($signup_field, $type);
+    $db_info = content_database_info($field);
+    $count = db_result(db_query("SELECT COUNT(1) FROM {node} LEFT JOIN {%s} nr USING (vid) WHERE node.type = '%s' AND nr.%s = %d", array(':table' => $db_info['table'], ':type' => $type, ':column' => $db_info['columns']['nid']['column'], ':nid' => $event->nid)));
+    $signups[$type] = $count;
+  }
+
+  // Allow other modules to alter the capacity (group signup, for example).
+  drupal_alter('cck_signup_available_capacity', $signups, $event);
+
+  return $capacity - array_sum($signups);
+}
+
+/**
+ * Get available signup types for a given node reference field.
+ */
+function cck_signup_get_signup_types($field_name) {
+  static $types = array();
+
+  if (!isset($types[$field_name])) {
+    $type_info = _content_type_info();
+    $types[$field_name] = array();
+    foreach ($type_info['content types'] as $type_name => $type) {
+      if (in_array($field_name, array_keys($type['fields']))) {
+        $types[$field_name][$type_name] = $type_name;
+      }
+    }
+  }
+
+  return $types[$field_name];
+}
+
+/**
+ * Determine if an event is past.
+ *
+ * @param $event
+ *   Event node object.
+ */
+function cck_signup_event_is_past($event) {
+  if ($check_date = variable_get('cck_signup_field_date_' . $event->type, FALSE)) {
+    // Check for date in the past.
+    $event_date = date_make_date($event->{$check_date}[0]['value']);
+    $now = date_now();
+    return $event_date <= $now;
+  }
+  return FALSE;
+}

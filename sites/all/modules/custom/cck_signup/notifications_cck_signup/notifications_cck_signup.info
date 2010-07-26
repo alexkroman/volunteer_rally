@@ -1,0 +1,7 @@
+; $Id$
+name = CCK Sign-up notifications
+description = Notifications for sign-ups
+core = 6.x
+package = Notifications
+dependencies[] = cck_signup
+dependencies[] = notifications

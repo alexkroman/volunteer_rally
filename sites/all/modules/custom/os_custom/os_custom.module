@@ -1,0 +1,89 @@
+<?php
+
+// $Id: os_custom.module 887 2009-09-24 15:51:14Z jhedstrom $
+
+/**
+ * @file
+ * OpenSourcery base customizations.
+ */
+
+/**
+ * Implementation of hook_form_alter().
+ *
+ * - Sets the revisions as enabled for new content types.
+ */
+function os_custom_form_alter(&$form, $form_state, $form_id) {
+  switch ($form_id) {
+    case 'node_type_form':
+      if (!isset($form['#node_type']->orig_type)) {
+        $options = array();
+        // Set to published by default.
+        $options[] = 'status';
+        // Enable revisions by default.
+        $options[] = 'revision';
+        $form['workflow']['node_options']['#default_value'] = $options;
+      }
+      break;
+  }
+}
+
+/**
+ * Implementations of hook_date_format_types().
+ */
+function os_custom_date_format_types() {
+  return array(
+    'day' => t('Day'),
+    'time' => t('Time'),
+  );
+}
+
+/**
+ * Implementation of hook_date_formats().
+ */
+function os_custom_date_formats() {
+  $condensed = array(
+    'day' => array(
+      'j F Y',
+      'l, M j',
+      'l, j M',
+      'n/j/Y',
+    ),
+    'time' => array(
+      'g:ia',
+      'H:i',
+    ),
+  );
+  $formats = array();
+  foreach ($condensed as $type => $f) {
+    foreach ($f as $format) {
+      $formats[] = array(
+        'type' => $type,
+        'format' => $format,
+        'locales' => array(),
+      );
+    }
+  }
+  return $formats;
+}
+
+/**
+ * Preprocess page variables.
+ */
+function os_custom_preprocess_page(&$vars) {
+  if (isset($vars['footer_message'])) {
+    // Replace @year with current year.
+    $vars['footer_message'] = str_replace('@year', date('Y'), $vars['footer_message']);
+  }
+}
+
+/**
+ * Implementation of hook_url_outbound_alter().
+ *
+ * If the url_alter module is enabled, this will pass the destination
+ * parameter passed to user along to the registration tab.
+ */
+function os_custom_url_outbound_alter(&$path, &$options, $original) {
+  if (user_is_anonymous() && in_array($original, array('user', 'user/register', 'user/login')) && empty($options['query']) && !variable_get('user_email_verification', TRUE)) {
+    $options['query'] = drupal_get_destination();
+  }
+}

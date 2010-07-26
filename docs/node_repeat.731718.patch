@@ -1,0 +1,12 @@
+diff --git node_repeat.module node_repeat.module
+index 2d40b07..a321f55 100755
+--- node_repeat.module
++++ node_repeat.module
+@@ -38,7 +38,6 @@ function node_repeat_form_alter(&$form, $form_state, $form_id) {
+       '#title' => t('Node Repeat'),
+       '#collapsible' => TRUE,
+       '#collapsed' => TRUE,
+-      '#weight' => 40,
+     );
+     
+     //get all fields for this content type

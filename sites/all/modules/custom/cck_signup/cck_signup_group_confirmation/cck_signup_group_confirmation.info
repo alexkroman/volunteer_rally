@@ -1,0 +1,6 @@
+; $Id$
+name = CCK Signup Group Confirmation
+description = Allows for confirmation of attendance of a group event or shift.
+package = "CCK Sign-up"
+core = 6.x
+dependencies[] = cck_signup_group

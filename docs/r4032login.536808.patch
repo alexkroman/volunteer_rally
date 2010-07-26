@@ -1,0 +1,27 @@
+Index: r4032login.module
+===================================================================
+--- r4032login.module	(revision 2380)
++++ r4032login.module	(working copy)
+@@ -38,9 +38,9 @@ function r4032login_access() {
+ function r4032login_admin_settings() {
+   $form = array();
+   $form['r4032login_display_denied_message'] = array(
+-    '#type' => 'checkbox',
++    '#type' => 'textarea',
+     '#title' => t('Display access denied message on login page'),
+-    '#default_value' => variable_get('r4032login_display_denied_message', TRUE)
++    '#default_value' => variable_get('r4032login_display_denied_message', 'Access denied. You must login to view this page.')
+   );
+   $form['r4032login_user_register_message'] = array(
+     '#type' => 'textfield',
+@@ -75,8 +75,8 @@ function r4032login_theme() {
+ function r4032login_redirect() {
+   global $user;
+   if ($user->uid == 0) {
+-    if (variable_get('r4032login_display_denied_message', TRUE)) {
+-      drupal_set_message(t('Access denied. You must login to view this page.'), 'error');
++    if (variable_get('r4032login_display_denied_message', 'Access denied. You must login to view this page.')) {
++      drupal_set_message(variable_get('r4032login_display_denied_message', 'Access denied. You must login to view this page.'), 'error');
+     }
+     // using drupal_goto() with destination set causes a recursive redirect loop
+     header('Location: '. url('user/login', array('query' => 'destination='. drupal_urlencode($_REQUEST['q']), 'absolute' => TRUE)), TRUE, 302);

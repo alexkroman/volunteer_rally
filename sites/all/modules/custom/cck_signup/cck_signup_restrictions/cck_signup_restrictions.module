@@ -1,0 +1,35 @@
+<?php
+// $Id$
+
+/**
+ * @file
+ * Set and enforce restrictions on sign-up nodes.
+ */
+
+/**
+ * Implementation of hook_form_FORM_ID_alter().
+ */
+function cck_signup_restrictions_form_node_type_form_alter(&$form, $form_state) {
+  module_load_include('admin.inc', 'cck_signup_restrictions');
+  _cck_signup_restrictions_form_node_type_form_alter($form, $form_state);
+}
+
+/**
+ * Implementation of hook_cck_signup_validate().
+ */
+function cck_signup_restrictions_cck_signup_validate($type, $event, &$form_state) {
+  if ($field_name = variable_get('cck_signup_restrictions_field_' . $event->type, FALSE)) {
+    // Load field definition.
+    $field = content_fields($field_name);
+
+    // Allowed values.
+    $restricted_fields = content_allowed_values($field);
+    foreach ($event->{$field_name} as $delta => $restriction) {
+      $restricted_field = $restriction['value'];
+      // If the count on a restricted field is > 0, this sign-up is invalid and must fail.
+      if (!empty($form_state['values'][$restricted_field][0]['value'])) {
+        form_set_error($restricted_field, t('This event is restricted for: %restriction', array('%restriction' => $restricted_fields[$restricted_field])));
+      }
+    }
+  }
+}

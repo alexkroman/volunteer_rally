@@ -1,0 +1,26 @@
+diff --git jcalendar/jcalendar.js jcalendar/jcalendar.js
+index 8d50c2e..0dc946b 100644
+--- jcalendar/jcalendar.js
++++ jcalendar/jcalendar.js
+@@ -53,7 +53,7 @@ if (Drupal.jsEnabled) {
+       // fill the div with data
+       $.ajax({
+         type: "GET",
+-        url: var_base_path + "?q=jcalendar/getnode/"+nid+"/"+ids,
++        url: var_base_path + "/"+nid+"/"+ids,
+         success: function(msg){
+           domCallback(msg);
+         }
+diff --git jcalendar/jcalendar.module jcalendar/jcalendar.module
+index 0962ec2..24f23c4 100644
+--- jcalendar/jcalendar.module
++++ jcalendar/jcalendar.module
+@@ -64,7 +64,7 @@ function jcalendar_views_pre_view(&$view, &$display_id) {
+     if ($display->display_plugin == 'calendar') {
+       $path = drupal_get_path('module', 'jcalendar');
+       drupal_add_js('var var_path = '. drupal_to_js(base_path() . $path) .";", 'inline');
+-      drupal_add_js('var var_base_path = '. drupal_to_js((base_path())) .";", 'inline');
++      drupal_add_js('var var_base_path = '. drupal_to_js(url('jcalendar/getnode')) .";", 'inline');
+       drupal_add_js($path .'/jcalendar.js');
+       drupal_add_css($path .'/jcalendar.css');
+     }

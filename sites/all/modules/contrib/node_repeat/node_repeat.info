@@ -1,0 +1,16 @@
+; $Id: node_repeat.info,v 1.1.2.1 2009/11/30 02:09:04 olivercoleman Exp $
+name = Node Repeat
+description = Allows creating duplicates of a node from repeating date sequences.
+core = 6.x
+dependencies[] = date_repeat
+package = Date/Time
+version = "6.x-1.1"
+core = "6.x"
+project = "node_repeat"
+
+; Information added by drupal.org packaging script on 2009-11-30
+version = "6.x-1.1"
+core = "6.x"
+project = "node_repeat"
+datestamp = "1259547357"
+

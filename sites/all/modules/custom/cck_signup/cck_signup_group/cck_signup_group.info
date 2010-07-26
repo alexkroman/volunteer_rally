@@ -1,0 +1,7 @@
+; $Id$
+name = Group sign-up
+description = Sign-up groups of people for events
+core = 6.x
+dependencies[] = cck_signup
+dependecnies[] = number
+package = "CCK Sign-up"

@@ -1,0 +1,6 @@
+; $Id$
+name = CCK Signup Restrictions
+description = Set and enforce restrictions on sign-ups.
+dependencies[] = cck_signup
+core = 6.x
+package = "CCK Sign-up"

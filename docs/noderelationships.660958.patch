@@ -1,0 +1,190 @@
+diff --git noderelationships.inc noderelationships.inc
+index af66d72..b50f2aa 100644
+--- noderelationships.inc
++++ noderelationships.inc
+@@ -32,15 +32,67 @@ function noderelationships_settings_list($where) {
+   if (isset($args[0]) && is_array($args[0])) {
+     $args = $args[0];
+   }
+-  $result = db_query('SELECT type_name, relation_type, related_type, field_name, settings FROM {noderelationships_settings} WHERE '. $where, $args);
++  
++  //-- Run default settings sync, which makes sure data is not stale. 
++  //-- It won't perform DB inserts if data is not stale, though, so it's ok to run this often.'
++  noderelationships_default_settings_sync();
++  
++  $result = db_query('SELECT type_name, relation_type, related_type, field_name, settings, export_key FROM {noderelationships_settings} WHERE '. $where, $args);
+   $rows = array();
+   while ($row = db_fetch_object($result)) {
+     $row->settings = (!empty($row->settings) ? (array)unserialize($row->settings) : array());
+-    $rows[] = $row;
++    $rows[$row->export_key] = $row;
+   }
+   return $rows;
+ }
+ 
++
++/**
++* Make sure code-provided settings are loaded in the DB.
++*
++*/
++function noderelationships_default_settings_sync() {
++  $table = 'noderelationships_default_settings';
++  $cache_key = 'noderelationships_default_settings_cid';
++  
++  $dflt_settings_cache = cache_get($cache_key);
++  $dflt_settings_cache = empty($dflt_settings_cache) ? array() : $dflt_settings_cache->data;       
++  $dflt_settings_code  = module_invoke_all('noderelationships_default_settings');  
++  
++  //-- We need to make sure DB has all keys defined by code! 
++  $result = db_query('SELECT export_key FROM {noderelationships_settings}');
++  $db_keys = array();
++  while ($row = db_fetch_object($result)) {
++    $db_keys[] = $row->export_key;
++  }
++
++  $all_keys_are_in_db = TRUE;
++  if (is_array($dflt_settings_code)) {
++    foreach($dflt_settings_code as $dflt_setting) {
++      if(!in_array($dflt_setting->export_key, $db_keys)) {
++        $all_keys_are_in_db = FALSE;
++        break;
++      }
++    }
++  }
++
++  //-- exit if data is up to date.          
++  if ($dflt_settings_cache == $dflt_settings_code &&  $all_keys_are_in_db) {
++    return;
++  }
++  
++  cache_set($cache_key, $dflt_settings_code);
++  
++  foreach ($dflt_settings_code as $default) {
++    if (!in_array($default->export_key, $db_keys)) {
++      $deault->settings = empty($default->settings) ? array() : unserialize($default->settings);      
++      drupal_write_record('noderelationships_settings',$default);
++    }
++  }
++   
++}
++
++
+ /**
+  * Get relationship settings for the given content type.
+  *
+@@ -159,13 +211,12 @@ function noderelationships_settings_save($nodetype, $settings) {
+   db_query("DELETE FROM {noderelationships_settings} WHERE type_name = '%s'", $nodetype);
+   foreach ($settings_rows as $settings_key => $settings_row) {
+     list($relation_type, $related_type, $field_name) = explode(':', $settings_key);
+-    $args = array($nodetype, $relation_type, $related_type, $field_name, serialize($settings_row));
+-    db_query("INSERT INTO {noderelationships_settings} (type_name, relation_type, related_type, field_name, settings) VALUES ('%s', '%s', '%s', '%s', '%s')", $args);
++    $args = array($nodetype, $relation_type, $related_type, $field_name, serialize($settings_row), $nodetype .'__'. $field_name);
++    db_query("INSERT INTO {noderelationships_settings} (type_name, relation_type, related_type, field_name, settings, export_key) VALUES ('%s', '%s', '%s', '%s', '%s', '%s')", $args);
+   }
+ 
+   // Synchronize back reference settings with back reference fields.
+   noderelationships_cck_backref_sync_fields($nodetype);
+-
+   return TRUE;
+ }
+ 
+diff --git noderelationships.install noderelationships.install
+index d2f4401..3e527b3 100644
+--- noderelationships.install
++++ noderelationships.install
+@@ -107,6 +107,13 @@ function noderelationships_schema() {
+         'not null' => TRUE,
+         'description' => 'Relation settings (serialized).',
+       ),
++      'export_key' => array(
++        'type' => 'varchar',
++        'length' => '64',
++        'not null' => TRUE,
++        'default' => '',
++        'description' => 'Key for importing and export settings.',
++      ),
+     ),
+     'primary key' => array('type_name', 'relation_type', 'related_type', 'field_name'),
+     'indexes' => array(
+@@ -115,6 +122,20 @@ function noderelationships_schema() {
+       'field_name' => array('field_name'),
+     ),
+   );
++
++  //-- Making node relationships CTools Exportable  
++  $schema['noderelationships_settings']['export'] = array(
++    'key' => 'export_key',
++    'identifier' => 'noderelationships_default_setting',
++    'default hook' => 'noderelationships_default_settings',
++    'api' => array(
++      'owner' => 'noderelationships',
++      'api' => 'default_node_relationships',  // Base name for api include files.
++      'minimum_version' => 1,
++      'current_version' => 1,
++    ),
++  );
++  
+   return $schema;
+ }
+ 
+@@ -137,3 +158,15 @@ function noderelationships_update_6002() {
+   $ret = array();
+   return $ret;
+ }
++/**
++ * Add export key 
++ */
++function noderelationships_update_6004() {
++  $table = 'noderelationships_settings';
++  $field = 'export_key';
++  $schema =  noderelationships_schema();
++  $spec = $schema[$table]['fields'][$field];
++   db_add_field($return,$table, $field, $spec);
++   db_query("UPDATE {noderelationships_settings} SET export_key = concat(type_name, '__', field_name)");
++  return array();
++}
+\ No newline at end of file
+diff --git noderelationships.module noderelationships.module
+index 7340f06..13d46c8 100644
+--- noderelationships.module
++++ noderelationships.module
+@@ -460,3 +460,38 @@ function _noderelationships_child_node_form_pre_render_proxy($form) {
+   module_load_include('inc', 'noderelationships', 'noderelationships.pages');
+   return _noderelationships_child_node_form_pre_render($form);
+ }
++
++/*
++ * Implementation of hook_table_name_to_hook_code
++ */
++function noderelationships_noderelationships_settings_to_hook_code($data, $module) {
++  module_load_include('inc', 'noderelationships');
++  $data_type = array_pad(array(),count($data),"'%s'"); 
++  $where = 'export_key in ('. implode(',', $data_type). ')';
++  $settings = noderelationships_settings_list($where,$data);
++  
++  $code = '  $export = array();'."\n";
++  foreach($settings as $key=>$setting) {
++    $setting->settings = serialize($setting->settings);
++    $code .= ctools_export_object('noderelationships_settings', $setting, '  ');
++    $code .= '  $export[\''. $key .'\'] = $noderelationships_default_setting;'."\n";
++    $code .= "\n";
++  }
++  $code .= '  return $export;';
++  $code = "   {\n$code}\n   ";
++  return $code;
++
++}
++
++/*
++ * Implementation of hook_table_name_list
++ */
++function noderelationships_noderelationships_settings_list() {
++  module_load_include('inc', 'noderelationships');
++  $settings = noderelationships_settings_list("1=1");
++  foreach($settings as $key =>$setting) {
++    $list[$key] = $key;
++  }
++
++  return $list;
++}
+\ No newline at end of file

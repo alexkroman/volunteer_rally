@@ -1,0 +1,9 @@
+<?php
+// $Id: nodeaccess_userreference.install,v 1.1.6.1 2009/08/22 10:49:46 danielb Exp $
+
+/**
+ * Implementation of hook_uninstall().
+ */
+function nodeaccess_userreference_uninstall() {
+  variable_del('nodeaccess_userreference');
+}

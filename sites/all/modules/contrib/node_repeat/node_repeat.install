@@ -1,0 +1,31 @@
+<?php
+// $Id: node_repeat.install,v 1.1 2009/11/26 06:46:34 olivercoleman Exp $ 
+
+/**
+ * @file
+ * Install, update and uninstall functions for the node_repeat module. 
+ * Creates two tables, node_repeat_sequence and node_repeat_sequence_member
+ * for storing overall info about sequences and node<->sequence relations 
+ * respectively.
+ */
+
+
+function node_repeat_install() {
+  switch ($GLOBALS['db_type']) {
+    case 'mysql':
+    case 'mysqli':
+      db_query("CREATE TABLE {node_repeat_sequence} (seqid int unsigned not null auto_increment, rrule text, primary key(seqid))");
+      db_query("CREATE TABLE {node_repeat_sequence_member} (seqid int unsigned not null, nid int unsigned not null, primary key(seqid, nid))");
+      break;
+  }
+}
+
+function node_repeat_uninstall() {
+  switch ($GLOBALS['db_type']) {
+    case 'mysql':
+    case 'mysqli':
+      db_query("DROP TABLE {node_repeat_sequence}");
+      db_query("DROP TABLE {node_repeat_sequence_member}");
+      break;
+  }
+}
