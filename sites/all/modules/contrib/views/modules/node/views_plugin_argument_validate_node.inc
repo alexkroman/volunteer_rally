@@ -78,7 +78,8 @@ class views_plugin_argument_validate_node extends views_plugin_argument_validate
         }
 
         if (!empty($this->argument->options['validate_argument_node_access'])) {
-          if (!node_access($this->argument->options['validate_argument_node_access_op'], $node)) {
+          $access_op = isset($this->argument->options['validate_argument_node_access_op']) ? $this->argument->options['validate_argument_node_access_op'] : 'view';
+          if (!node_access($access_op, $node)) {
             return FALSE;
           }
         }
@@ -112,7 +113,8 @@ class views_plugin_argument_validate_node extends views_plugin_argument_validate
           }
 
           if (!empty($this->argument->options['validate_argument_node_access'])) {
-            if (!node_access($this->argument->options['validate_argument_node_access_op'], $node)) {
+            $access_op = isset($this->argument->options['validate_argument_node_access_op']) ? $this->argument->options['validate_argument_node_access_op'] : 'view';
+            if (!node_access($access_op, $node)) {
               return FALSE;
             }
           }
