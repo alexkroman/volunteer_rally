@@ -35,11 +35,6 @@ function volunteer_rally_install_profile_modules() {
 
     // Custom modules.
     'os_custom',
-
-    // Development modules.
-    'admin_menu',
-    'devel',
-    'masquerade',
   );
 
   return $modules;
