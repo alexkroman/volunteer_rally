@@ -1,0 +1,51 @@
+diff --git author_smart_name.module author_smart_name.module
+index aafa11e..4a9ec34 100644
+--- author_smart_name.module
++++ author_smart_name.module
+@@ -36,6 +36,11 @@ function author_smart_name_form_alter(&$form, $form_state, $form_id){
+     // Changing the authoring information in order to call another ajax function instead of core
+     if ($form['author']['name']['#autocomplete_path']) {
+    		$form['author']['name']['#autocomplete_path'] = 'smart/user_autocomplete';
++
++      // Attach validation function to strip the real name off the submitted value.
++      if (!in_array('_author_smart_name_validate', $form['#validate'])) {
++        array_unshift($form['#validate'], '_author_smart_name_validate');
++      }
+    	}
+   }
+ }
+@@ -50,7 +55,7 @@ function author_smart_name_autocomplete($string = '') {
+     switch ($source){
+       // Core Profile module = 1
+       case '1': 
+-        $result = db_query_range("SELECT u.name, pv.value FROM {users} u, {profile_values} pv WHERE pv.fid = %d AND pv.uid = u.uid AND LOWER(pv.value) LIKE LOWER('%s%%')", 1, $string, 0, 10);
++        $result = db_query_range("SELECT CONCAT(u.name, ': ', pv.value) AS name, pv.value FROM {users} u, {profile_values} pv WHERE pv.fid = %d AND pv.uid = u.uid AND LOWER(pv.value) LIKE LOWER('%s%%')", 1, $string, 0, 10);
+         while ($user = db_fetch_object($result)) {
+           $matches[$user->name] = check_plain($user->value);
+         }
+@@ -61,7 +66,7 @@ function author_smart_name_autocomplete($string = '') {
+         $field = variable_get('author_smart_name_profile_field', 'title');
+         $type = variable_get('author_smart_name_profile_type', 'profile');
+         if ($field == 'title'){
+-          $result = db_query_range("SELECT u.name, n.title FROM {node} n INNER JOIN {users} u ON n.uid = u.uid WHERE n.type = '%s' AND LOWER(n.title) LIKE LOWER('%s%%')", $type, $string, 0, 10);
++          $result = db_query_range("SELECT CONCAT(u.name, ': ', n.title) AS name, n.title FROM {node} n INNER JOIN {users} u ON n.uid = u.uid WHERE n.type = '%s' AND LOWER(n.title) LIKE LOWER('%s%%')", $type, $string, 0, 10);
+           while ($author = db_fetch_object($result)) {
+             $matches[$author->name] = check_plain($author->title);
+           }
+@@ -74,3 +79,15 @@ function author_smart_name_autocomplete($string = '') {
+   }
+   drupal_json($matches);
+ }
++
++/**
++ * Detects names of the form 'username: smart name' and converts them to 'username', prior to node_validate() being run.
++ */
++function _author_smart_name_validate($form, &$form_state) {
++  // Use limit=2 in the event that real names contain ':'.
++  $name = explode(':', $form_state['values']['name'], 2);
++  $username = $name[0];
++  if ($author = user_load(array('name' => $username))) {
++    $form_state['values']['name'] = $author->name;
++  }
++}
+\ No newline at end of file
