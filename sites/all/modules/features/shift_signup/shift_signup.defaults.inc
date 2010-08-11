@@ -550,6 +550,13 @@ function _shift_signup_strongarm() {
   $strongarm = new stdClass;
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
+  $strongarm->name = 'author_smart_name_source';
+  $strongarm->value = '2';
+
+  $export['author_smart_name_source'] = $strongarm;
+  $strongarm = new stdClass;
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
   $strongarm->name = 'cck_signup_field_capacity_shift';
   $strongarm->value = 'field_shift_capacity';
 
