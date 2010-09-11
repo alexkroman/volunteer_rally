@@ -52,7 +52,7 @@ projects[features][subdir] = "contrib"
 projects[features][version] = "1.0"
 
 projects[jquery_ui][subdir] = "contrib"
-projects[jquery_ui][version] = "1.3"
+projects[jquery_ui][version] = "1.4"
 
 projects[less][subdir] = "contrib"
 projects[less][version] = "2.1"
@@ -122,3 +122,24 @@ projects[devel][version] = "1.22"
 
 projects[simpletest][subdir] = "development"
 projects[simpletest][version] = "2.10"
+
+; Themes
+projects[zen][version] = "2.0"
+; http://drupal.org/node/634552#comment-3244662
+projects[zen][patch][] = "http://drupal.org/files/issues/zen-634552_0.patch"
+
+projects[tao][location] = "http://code.developmentseed.org/fserver"
+projects[tao][version] = "3.1"
+
+projects[rubik][location] = "http://code.developmentseed.org/fserver"
+projects[rubik][version] = "3.0-beta1"
+
+projects[doune][type] = "theme"
+projects[doune][download][type] = "git"
+projects[doune][download][url] = "git://github.com/opensourcery/doune.git"
+
+; Libraries
+libraries[jquery_ui][download][type] = "get"
+libraries[jquery_ui][download][url] = "http://jquery-ui.googlecode.com/files/jquery.ui-1.6.zip"
+libraries[jquery_ui][directory_name] = "jquery.ui"
+libraries[jquery_ui][destination] = "modules/contrib/jquery_ui"
