@@ -721,7 +721,8 @@ function _shift_signup_views_default_views() {
   $handler->override_option('access', array(
     'type' => 'role',
     'role' => array(
-      '2' => 2,
+      '4' => 4,
+      '3' => 3,
     ),
   ));
   $handler->override_option('cache', array(
