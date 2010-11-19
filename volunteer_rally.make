@@ -17,6 +17,12 @@ projects[admin][version] = "2.0"
 projects[advanced_help][subdir] = "contrib"
 projects[advanced_help][version] = "1.2"
 
+projects[author_smart_name][subdir] = "contrib"
+projects[author_smart_name][type] = "module"
+projects[author_smart_name][download][type] = "cvs"
+projects[author_smart_name][download][module] = "contributions/modules/author_smart_name"
+projects[author_smart_name][download][revision] = "DRUPAL-6--2:2010-10-04"
+
 projects[auto_nodetitle][subdir] = "contrib"
 projects[auto_nodetitle][version] = "1.2"
 
@@ -79,6 +85,8 @@ projects[modalframe][version] = "1.7"
 
 projects[node_repeat][subdir] = "contrib"
 projects[node_repeat][version] = "1.1"
+projects[node_repeat][patches][] = "http://drupal.org/files/issues/node_repeat.remove_weight.patch"
+projects[node_repeat][patches][] = "http://drupal.org/files/issues/node_repeat.patch"
 
 projects[nodeaccess][subdir] = "contrib"
 projects[nodeaccess][version] = "1.3"
@@ -118,11 +126,20 @@ projects[token][version] = "1.14"
 projects[url_alter][subdir] = "contrib"
 projects[url_alter][version] = "1.2"
 
+; This version works with php 5.3
 projects[vertical_tabs][subdir] = "contrib"
 projects[vertical_tabs][type] = "module"
 projects[vertical_tabs][download][type] = "cvs"
 projects[vertical_tabs][download][module] = "contributions/modules/vertical_tabs"
-projects[vertical_tabs][download][revision] = "DRUPAL-6--2:2010-02-09"
+projects[vertical_tabs][download][revision] = "DRUPAL-6--1:2010-02-09"
+
+; OpenSourcery administration feature
+projects[os_admin][subdir] = "stock"
+projects[os_admin][type] = "module"
+projects[os_admin][download][type] = "git"
+projects[os_admin][download][url] = "git://github.com/opensourcery/os_admin.git"
+projects[os_admin][download][tag] = "DRUPAL-6--1-0-ALPHA2"
+
 
 projects[wysiwyg][subdir] = "contrib"
 projects[wysiwyg][version] = "2.1"
