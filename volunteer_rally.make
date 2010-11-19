@@ -119,8 +119,17 @@ projects[url_alter][version] = "1.2"
 projects[vertical_tabs][subdir] = "contrib"
 projects[vertical_tabs][type] = "module"
 projects[vertical_tabs][download][type] = "cvs"
-projects[vertical_tabs][download][module] = "contributions/modules/vertical_tabs"
-projects[vertical_tabs][download][revision] = "DRUPAL-6--2:2010-02-09"
+projects[vertical_tabs][download][module] = "contributions/modules/vertical_tabs
+"
+projects[vertical_tabs][download][revision] = "DRUPAL-6--1:2010-02-09"
+
+; OpenSourcery administration feature
+projects[os_admin][subdir] = "stock"
+projects[os_admin][type] = "module"
+projects[os_admin][download][type] = "git"
+projects[os_admin][download][url] = "git://github.com/opensourcery/os_admin.git"
+projects[os_admin][download][tag] = "DRUPAL-6--1-0-ALPHA2"
+
 
 ; Patched projects
 

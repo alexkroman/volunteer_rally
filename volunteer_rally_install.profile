@@ -32,9 +32,6 @@ function volunteer_rally_install_profile_modules() {
     'token',
     'vertical_tabs',
     'views',
-
-    // Custom modules.
-    'os_custom',
   );
 
   return $modules;
@@ -158,8 +155,8 @@ function volunteer_rally_install_profile_tasks(&$task, $url) {
     // We cannot do everything here because of _system_theme_data() static cache
     system_theme_data();
     db_query("UPDATE {system} SET status = 0 WHERE type = 'theme' AND name ='%s'", 'garland');
-    variable_set('theme_default', 'doune');
-    db_query("UPDATE {system} SET status = 1 WHERE type = 'theme' AND name ='%s'", 'doune');
+    variable_set('theme_default', 'iggy');
+    db_query("UPDATE {system} SET status = 1 WHERE type = 'theme' AND name ='%s'", 'iggy');
     db_query("UPDATE {blocks} SET status = 0, region = ''"); // disable all DB blocks
 
     // Create roles.
@@ -430,7 +427,6 @@ function _volunteer_rally_install_modules() {
 
     // Theme
     'less',
-    'doune_theme_settings',
 
     // Admin section.
     'admin',
