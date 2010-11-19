@@ -17,6 +17,12 @@ projects[admin][version] = "2.0"
 projects[advanced_help][subdir] = "contrib"
 projects[advanced_help][version] = "1.2"
 
+projects[author_smart_name][subdir] = "contrib"
+projects[author_smart_name][type] = "module"
+projects[author_smart_name][download][type] = "cvs"
+projects[author_smart_name][download][module] = "contributions/modules/author_smart_name"
+projects[author_smart_name][download][revision] = "DRUPAL-6--2:2010-10-04"
+
 projects[auto_nodetitle][subdir] = "contrib"
 projects[auto_nodetitle][version] = "1.2"
 
