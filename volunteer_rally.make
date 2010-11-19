@@ -55,6 +55,7 @@ projects[ctools][version] = "1.7"
 
 projects[date][subdir] = "contrib"
 projects[date][version] = "2.6"
+projects[date][patch][] = "http://drupal.org/files/issues/date-views-php5.3-fix.patch"
 
 projects[date_single_day][subdir] = "contrib"
 projects[date_single_day][version] = "1.2"
@@ -91,6 +92,7 @@ projects[nodereference_url][version] = "1.6"
 
 projects[noderelationships][subdir] = "contrib"
 projects[noderelationships][version] = "1.6"
+projects[noderelationships][patch][] = "http://drupal.org/files/issues/noderelationships.660958_0.patch"
 
 projects[notifications][subdir] = "contrib"
 projects[notifications][version] = "2.2"
@@ -103,6 +105,7 @@ projects[purl][version] = "1.0-beta13"
 
 projects[r4032login][subdir] = "contrib"
 projects[r4032login][version] = "1.2"
+projects[r4032login][patch][] = "http://drupal.org/files/issues/r4032login.patch"
 
 projects[role_delegation][subdir] = "contrib"
 projects[role_delegation][version] = "1.3"
@@ -130,6 +133,9 @@ projects[os_admin][download][type] = "git"
 projects[os_admin][download][url] = "git://github.com/opensourcery/os_admin.git"
 projects[os_admin][download][tag] = "DRUPAL-6--1-0-ALPHA2"
 
+
+projects[wysiwyg][subdir] = "contrib"
+projects[wysiwyg][version] = "2.1"
 
 ; Patched projects
 
