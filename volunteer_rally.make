@@ -91,6 +91,7 @@ projects[nodereference_url][version] = "1.6"
 
 projects[noderelationships][subdir] = "contrib"
 projects[noderelationships][version] = "1.6"
+projects[noderelationships][patch][] = "http://drupal.org/files/issues/noderelationships.660958_0.patch"
 
 projects[notifications][subdir] = "contrib"
 projects[notifications][version] = "2.2"
@@ -103,7 +104,7 @@ projects[purl][version] = "1.0-beta13"
 
 projects[r4032login][subdir] = "contrib"
 projects[r4032login][version] = "1.2"
-projects[r4032login][patch] = "http://drupal.org/files/issues/r4032login.patch"
+projects[r4032login][patch][] = "http://drupal.org/files/issues/r4032login.patch"
 
 projects[role_delegation][subdir] = "contrib"
 projects[role_delegation][version] = "1.3"
@@ -122,6 +123,9 @@ projects[vertical_tabs][type] = "module"
 projects[vertical_tabs][download][type] = "cvs"
 projects[vertical_tabs][download][module] = "contributions/modules/vertical_tabs"
 projects[vertical_tabs][download][revision] = "DRUPAL-6--2:2010-02-09"
+
+projects[wysiwyg][subdir] = "contrib"
+projects[wysiwyg][version] = "2.1"
 
 ; Patched projects
 
