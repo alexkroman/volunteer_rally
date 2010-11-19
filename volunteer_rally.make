@@ -55,7 +55,6 @@ projects[ctools][version] = "1.7"
 
 projects[date][subdir] = "contrib"
 projects[date][version] = "2.6"
-projects[date][patch][] = "http://drupal.org/files/issues/date-views-php5.3-fix.patch"
 
 projects[date_single_day][subdir] = "contrib"
 projects[date_single_day][version] = "1.2"
