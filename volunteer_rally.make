@@ -119,11 +119,11 @@ projects[token][version] = "1.14"
 projects[url_alter][subdir] = "contrib"
 projects[url_alter][version] = "1.2"
 
+; This version works with php 5.3
 projects[vertical_tabs][subdir] = "contrib"
 projects[vertical_tabs][type] = "module"
 projects[vertical_tabs][download][type] = "cvs"
-projects[vertical_tabs][download][module] = "contributions/modules/vertical_tabs
-"
+projects[vertical_tabs][download][module] = "contributions/modules/vertical_tabs"
 projects[vertical_tabs][download][revision] = "DRUPAL-6--1:2010-02-09"
 
 ; OpenSourcery administration feature
