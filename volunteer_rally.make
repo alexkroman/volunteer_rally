@@ -123,6 +123,9 @@ projects[vertical_tabs][download][type] = "cvs"
 projects[vertical_tabs][download][module] = "contributions/modules/vertical_tabs"
 projects[vertical_tabs][download][revision] = "DRUPAL-6--2:2010-02-09"
 
+projects[wysiwyg][subdir] = "contrib"
+projects[wysiwyg][version] = "2.1"
+
 ; Patched projects
 
 projects[views][subdir] = "contrib"
