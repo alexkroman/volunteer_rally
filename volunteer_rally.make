@@ -103,7 +103,7 @@ projects[purl][version] = "1.0-beta13"
 
 projects[r4032login][subdir] = "contrib"
 projects[r4032login][version] = "1.2"
-projects[r4032login][patch] = "http://drupal.org/files/issues/r4032login.patch"
+projects[r4032login][patch][] = "http://drupal.org/files/issues/r4032login.patch"
 
 projects[role_delegation][subdir] = "contrib"
 projects[role_delegation][version] = "1.3"
