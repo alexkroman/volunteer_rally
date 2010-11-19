@@ -80,6 +80,8 @@ projects[modalframe][version] = "1.7"
 
 projects[node_repeat][subdir] = "contrib"
 projects[node_repeat][version] = "1.1"
+projects[node_repeat][patches][] = "http://drupal.org/files/issues/node_repeat.remove_weight.patch"
+projects[node_repeat][patches][] = "http://drupal.org/files/issues/node_repeat.patch"
 
 projects[nodeaccess][subdir] = "contrib"
 projects[nodeaccess][version] = "1.3"
