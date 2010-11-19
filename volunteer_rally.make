@@ -91,6 +91,7 @@ projects[nodereference_url][version] = "1.6"
 
 projects[noderelationships][subdir] = "contrib"
 projects[noderelationships][version] = "1.6"
+projects[noderelationships][patch][] = "http://drupal.org/files/issues/noderelationships.660958_0.patch"
 
 projects[notifications][subdir] = "contrib"
 projects[notifications][version] = "2.2"
