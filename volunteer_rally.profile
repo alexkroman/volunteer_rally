@@ -146,6 +146,9 @@ function volunteer_rally_profile_tasks(&$task, $url) {
     variable_set('node_options_page', array('status', 'revision'));
     variable_set('comment_page', COMMENT_NODE_DISABLED);
 
+    // Default footer.
+    variable_set('site_footer', st('Volunteer Rally&trade; &mdash; built by <a href="!url">OpenSourcery</a>', array('!url' => url('http://www.opensourcery.com'))));
+
     // Don't display date and author information for page nodes by default.
     $theme_settings = variable_get('theme_settings', array());
     $theme_settings['toggle_node_info_page'] = FALSE;
