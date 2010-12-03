@@ -11,9 +11,6 @@ projects[volunteer_rally_features][download][type] = "git"
 projects[volunteer_rally_features][download][url] = "git://github.com/opensourcery/volunteer_rally_features.git"
 
 ; Contrib projects
-projects[admin][subdir] = "contrib"
-projects[admin][version] = "2.0"
-
 projects[advanced_help][subdir] = "contrib"
 projects[advanced_help][version] = "1.2"
 
@@ -162,11 +159,7 @@ projects[simpletest][version] = "2.10"
 ; Themes
 projects[zen][version] = "2.0"
 ; http://drupal.org/node/634552#comment-3244662
-projects[zen][patch][] = "http://drupal.org/files/issues/zen-634552_0.patch"
-
-projects[tao][version] = "3.1"
-
-projects[rubik][version] = "3.0-beta2"
+projects[zen][patch][] = "http://drupal.org/files/issues/634552-63-context-conflict.patch"
 
 projects[doune][type] = "theme"
 projects[doune][download][type] = "git"
