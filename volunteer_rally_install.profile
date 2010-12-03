@@ -530,8 +530,10 @@ function _volunteer_rally_install_menu_items() {
 /**
  * Set Volunteer Rally as the default install profile.
  */
-function system_form_install_select_profile_form_alter(&$form, $form_state) {
-  foreach($form['profile'] as $key => $element) {
-    $form['profile'][$key]['#value'] = 'volunteer_rally_install';
+if (!function_exists('system_form_install_select_profile_form_alter')) {
+  function system_form_install_select_profile_form_alter(&$form, $form_state) {
+    foreach($form['profile'] as $key => $element) {
+      $form['profile'][$key]['#value'] = 'volunteer_rally_install';
+    }
   }
 }
