@@ -1,5 +1,5 @@
 <?php
-// $Id: volunteer_rally_install.profile 880 2009-09-04 00:10:54Z jhedstrom $
+// $Id$
 
 /**
  * Return an array of the modules to be enabled when this profile is installed.
@@ -7,7 +7,7 @@
  * @return array
  *   An array of modules to enable.
  */
-function volunteer_rally_install_profile_modules() {
+function volunteer_rally_profile_modules() {
   $modules = array(
     // Drupal core modules.
     'help', 'menu', 'taxonomy', 'dblog', 'path', 'search',
@@ -45,7 +45,7 @@ function volunteer_rally_install_profile_modules() {
  *   and optional 'language' to override the language selection for
  *   language-specific profiles.
  */
-function volunteer_rally_install_profile_details() {
+function volunteer_rally_profile_details() {
   return array(
     'name' => 'Volunteer Rally',
     'description' => st('Select this profile to enable a Volunteer Rally installation.'),
@@ -61,7 +61,7 @@ function volunteer_rally_install_profile_details() {
  *   while the values will be displayed to the user in the installer
  *   task list.
  */
-function volunteer_rally_install_profile_task_list() {
+function volunteer_rally_profile_task_list() {
   $tasks['volunteer-management-modules-batch'] = st('Install volunteer rally modules');
   return $tasks;
 }
@@ -117,7 +117,7 @@ function volunteer_rally_install_profile_task_list() {
  *   An optional HTML string to display to the user. Only used if you
  *   modify the $task, otherwise discarded.
  */
-function volunteer_rally_install_profile_tasks(&$task, $url) {
+function volunteer_rally_profile_tasks(&$task, $url) {
 
   if ($task == 'profile') {
     // Insert default user-defined node types into the database. For a complete
@@ -160,15 +160,15 @@ function volunteer_rally_install_profile_tasks(&$task, $url) {
     db_query("UPDATE {blocks} SET status = 0, region = ''"); // disable all DB blocks
 
     // Create roles.
-    _volunteer_rally_install_user_roles();
+    _volunteer_rally_user_roles();
     // Assign sensible input filter defaults to roles.
-    _volunteer_rally_install_better_formats();
+    _volunteer_rally_better_formats();
     // Initial permissions.
-    _volunteer_rally_install_set_permissions();
+    _volunteer_rally_set_permissions();
     // Pathauto defaults.
-    _volunteer_rally_install_pathauto();
+    _volunteer_rally_pathauto();
     // Core configuration and tweaks.
-    _volunteer_rally_install_core();
+    _volunteer_rally_core();
 
     $task = 'volunteer-management-modules';
  }
@@ -181,14 +181,14 @@ function volunteer_rally_install_profile_tasks(&$task, $url) {
   }
 
   if ($task == 'volunteer-management-modules') {
-    $modules = _volunteer_rally_install_modules();
+    $modules = _volunteer_rally_modules();
     $files = module_rebuild_cache();
     // Create batch
     foreach ($modules as $module) {
       $batch['operations'][] = array('_install_module_batch', array($module, $files[$module]->info['name']));
     }
-    $batch['operations'][] = array('_volunteer_rally_install_clean', array());
-    $batch['finished'] = '_volunteer_rally_install_profile_batch_finished';
+    $batch['operations'][] = array('_volunteer_rally_clean', array());
+    $batch['finished'] = '_volunteer_rally_profile_batch_finished';
     $batch['title'] = st('Installing @drupal', array('@drupal' => drupal_install_profile_name()));
     $batch['error_message'] = st('The installation has encountered an error.');
 
@@ -210,7 +210,7 @@ function volunteer_rally_install_profile_tasks(&$task, $url) {
  * Allows the profile to alter the site-configuration form. This is
  * called through custom invocation, so $form_state is not populated.
  */
-function volunteer_rally_install_form_alter(&$form, $form_state, $form_id) {
+function volunteer_rally_form_alter(&$form, $form_state, $form_id) {
   if ($form_id == 'install_configure') {
     // Set default for site name field.
     $form['site_information']['site_name']['#default_value'] = $_SERVER['SERVER_NAME'];
@@ -220,7 +220,7 @@ function volunteer_rally_install_form_alter(&$form, $form_state, $form_id) {
 /**
  * Creates Volunteer Coordinator and Administrator roles.
  */
-function _volunteer_rally_install_user_roles() {
+function _volunteer_rally_user_roles() {
   foreach (array('volunteer coordinator', 'administrator') as $role) {
     if (!db_result(db_query("SELECT rid FROM {role} WHERE name = '%s'", array(':role_name' => $role)))) {
       db_query("INSERT INTO {role} (name) VALUES ('%s')", $role);
@@ -234,7 +234,7 @@ function _volunteer_rally_install_user_roles() {
 /**
  * Set volunteer coordinator and administrator default input format to full HTML.
  */
-function _volunteer_rally_install_better_formats() {
+function _volunteer_rally_better_formats() {
   $roles = array();
   foreach (user_roles() as $rid => $name) {
     if (in_array($name, array('volunteer coordinator', 'administrator'))) {
@@ -258,7 +258,7 @@ function _volunteer_rally_install_better_formats() {
 /**
  * Set some sensible permissions.
  */
-function _volunteer_rally_install_set_permissions() {
+function _volunteer_rally_set_permissions() {
   $roles = user_roles();
   $admin_rid = array_search('administrator', $roles);
   $admin_user_perms = array(
@@ -304,7 +304,7 @@ function _volunteer_rally_install_set_permissions() {
 /**
  * Initial settings for pathauto and path redirect.
  */
-function _volunteer_rally_install_pathauto() {
+function _volunteer_rally_pathauto() {
   // Get rid of wonky content/foo pattern.
   // The rationale is that it's easier to bulk-update pathauto aliases
   // than it is to remove unwanted ones.
@@ -328,7 +328,7 @@ function _volunteer_rally_install_pathauto() {
 /**
  * Core customization.
  */
-function _volunteer_rally_install_core() {
+function _volunteer_rally_core() {
   // Change default anonymous to "Visitor".
   variable_set('anonymous', 'Visitor');
   
@@ -363,18 +363,14 @@ function _volunteer_rally_install_core() {
   variable_set('date_first_day', 0);
 
   // Add sign-in/logout link to primary.
-  _volunteer_rally_install_menu_items();
+  _volunteer_rally_menu_items();
 }
 
 /**
  * Additional modules to enable.
  */
-function _volunteer_rally_install_modules() {
+function _volunteer_rally_modules() {
   return array(
-    // Volunteer Rally.
-    'volunteer_rally',
-    'volunteer_rally_priority',
-
     // Modules required by the features below.
     'auto_nodetitle',
     'boxes',
@@ -437,14 +433,14 @@ function _volunteer_rally_install_modules() {
 /**
  * Finished callback.
  */
-function _volunteer_rally_install_profile_batch_finished($success, $results) {
+function _volunteer_rally_profile_batch_finished($success, $results) {
   variable_set('install_task', 'profile-finished');
 }
 
 /**
  * Clear and rebuild caches.
  */
-function _volunteer_rally_install_clean() {
+function _volunteer_rally_clean() {
   // Since content_profile adds a value for this variable during
   // install, we must delete it here.
   variable_del('content_profile_profile');
@@ -465,7 +461,7 @@ function _volunteer_rally_install_clean() {
 /**
  * Menu items.
  */
-function _volunteer_rally_install_menu_items() {
+function _volunteer_rally_menu_items() {
   $primary = array(
     'user/login' => t('Sign In'),
     'logout' => t('Log out'),
@@ -533,7 +529,7 @@ function _volunteer_rally_install_menu_items() {
 if (!function_exists('system_form_install_select_profile_form_alter')) {
   function system_form_install_select_profile_form_alter(&$form, $form_state) {
     foreach($form['profile'] as $key => $element) {
-      $form['profile'][$key]['#value'] = 'volunteer_rally_install';
+      $form['profile'][$key]['#value'] = 'volunteer_rally';
     }
   }
 }
