@@ -135,7 +135,7 @@ projects[os_admin][subdir] = "stock"
 projects[os_admin][type] = "module"
 projects[os_admin][download][type] = "git"
 projects[os_admin][download][url] = "git://github.com/opensourcery/os_admin.git"
-projects[os_admin][download][tag] = "DRUPAL-6--1-0-ALPHA2"
+projects[os_admin][download][tag] = "DRUPAL-6--1-0-ALPHA3"
 
 
 projects[wysiwyg][subdir] = "contrib"
