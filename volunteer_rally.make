@@ -145,7 +145,7 @@ projects[wysiwyg][version] = "2.1"
 ; Patched projects
 
 projects[views][subdir] = "contrib"
-projects[views][version] = "2.11"
+projects[views][version] = "2.12"
 ; http://drupal.org/node/862072
 projects[views][patch][] = "http://drupal.org/files/issues/views.862072.patch"
 
