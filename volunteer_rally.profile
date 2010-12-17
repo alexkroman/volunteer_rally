@@ -149,9 +149,20 @@ function volunteer_rally_profile_tasks(&$task, $url) {
     // Default footer.
     variable_set('site_footer', st('Volunteer Rally&trade; &mdash; built by <a href="!url">OpenSourcery</a>', array('!url' => url('http://www.opensourcery.com'))));
 
-    // Don't display date and author information for page nodes by default.
+    // Don't display date and author information for anything by default.
     $theme_settings = variable_get('theme_settings', array());
-    $theme_settings['toggle_node_info_page'] = FALSE;
+    $types = array(
+      'group',
+      'page',
+      'priority_code',
+      'profile',
+      'shift',
+      'signup',
+    );
+    foreach ($types as $type) {
+      $theme_settings['toggle_node_info_' . $type] = FALSE;
+    }
+
     variable_set('theme_settings', $theme_settings);
 
     // Set default theme. This needes some more set up on next page load
