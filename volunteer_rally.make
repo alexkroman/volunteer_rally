@@ -58,6 +58,7 @@ projects[ctools][version] = "1.8"
 
 projects[date][subdir] = "contrib"
 projects[date][version] = "2.6"
+projects[date][patch][] = "http://drupal.org/files/issues/385688_related_table_filter_handler_0.patch"
 
 projects[date_single_day][subdir] = "contrib"
 projects[date_single_day][version] = "1.2"
