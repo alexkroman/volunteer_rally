@@ -358,8 +358,12 @@ function _volunteer_rally_core() {
   // Disable all blocks.
   db_query("UPDATE {blocks} SET status = 0, region = ''");
 
-  // Date formats.
+  // Date formats are set here or the homepage calendar view breaks.
   variable_set('date_format_short', 'M j Y - g:ia');
+  variable_set('date_format_long', 'l, F j, Y - H:i');
+  variable_set('date_format_medium', 'D, Y-m-d H:i');
+  variable_set('date_format_day', 'j F Y');
+  variable_set('date_format_time', 'g:ia');
 
   // Timezones.
   if (variable_get('date_default_timezone', FALSE) === FALSE) {
