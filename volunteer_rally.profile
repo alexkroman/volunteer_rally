@@ -62,7 +62,7 @@ function volunteer_rally_profile_details() {
  *   task list.
  */
 function volunteer_rally_profile_task_list() {
-  $tasks['volunteer-management-modules-batch'] = st('Install volunteer rally modules');
+  $tasks['volunteer-management-modules-batch'] = st('Install Volunteer Rally modules');
   return $tasks;
 }
 
