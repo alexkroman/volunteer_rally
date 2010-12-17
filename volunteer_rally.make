@@ -54,7 +54,7 @@ projects[context][subdir] = "contrib"
 projects[context][version] = "3.0"
 
 projects[ctools][subdir] = "contrib"
-projects[ctools][version] = "1.7"
+projects[ctools][version] = "1.8"
 
 projects[date][subdir] = "contrib"
 projects[date][version] = "2.6"
@@ -72,10 +72,10 @@ projects[jquery_ui][subdir] = "contrib"
 projects[jquery_ui][version] = "1.4"
 
 projects[less][subdir] = "contrib"
-projects[less][version] = "2.1"
+projects[less][version] = "2.4"
 
 projects[messaging][subdir] = "contrib"
-projects[messaging][version] = "2.2"
+projects[messaging][version] = "2.3"
 
 projects[modalframe][subdir] = "contrib"
 projects[modalframe][version] = "1.7"
@@ -100,10 +100,10 @@ projects[noderelationships][version] = "1.6"
 projects[noderelationships][patch][] = "http://drupal.org/files/issues/noderelationships-660958-41.patch"
 
 projects[notifications][subdir] = "contrib"
-projects[notifications][version] = "2.2"
+projects[notifications][version] = "2.3"
 
 projects[pathauto][subdir] = "contrib"
-projects[pathauto][version] = "1.4"
+projects[pathauto][version] = "1.5"
 
 projects[purl][subdir] = "contrib"
 projects[purl][version] = "1.0-beta13"
@@ -113,13 +113,13 @@ projects[r4032login][version] = "1.2"
 projects[r4032login][patch][] = "http://drupal.org/files/issues/r4032login.patch"
 
 projects[role_delegation][subdir] = "contrib"
-projects[role_delegation][version] = "1.3"
+projects[role_delegation][version] = "1.4"
 
 projects[strongarm][subdir] = "contrib"
 projects[strongarm][version] = "2.0"
 
 projects[token][subdir] = "contrib"
-projects[token][version] = "1.14"
+projects[token][version] = "1.15"
 
 projects[url_alter][subdir] = "contrib"
 projects[url_alter][version] = "1.2"
@@ -152,7 +152,7 @@ projects[views][patch][] = "http://drupal.org/files/issues/views.862072.patch"
 ; Devel modules
 
 projects[devel][subdir] = "development"
-projects[devel][version] = "1.22"
+projects[devel][version] = "1.23"
 
 projects[simpletest][subdir] = "development"
 projects[simpletest][version] = "2.10"
