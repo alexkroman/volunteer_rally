@@ -48,7 +48,7 @@ projects[cck][subdir] = "contrib"
 projects[cck][version] = "2.8"
 
 projects[cck_signup][subdir] = "contrib"
-projects[cck_signup][version] = "1.0-alpha3"
+projects[cck_signup][version] = "1.0-alpha4"
 
 projects[content_profile][subdir] = "contrib"
 projects[content_profile][version] = "1.0"
