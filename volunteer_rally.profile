@@ -391,6 +391,8 @@ function _volunteer_rally_modules() {
   return array(
     // Modules required by the features below.
     'auto_nodetitle',
+    'ajax_load',
+    'author_smart_name',
     'boxes',
     'calendar', 'jcalendar',
     'cck_signup',
