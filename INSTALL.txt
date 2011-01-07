@@ -1,23 +1,13 @@
-How to install Donor Rally
-==========================
+How to install Volunteer Rally
+==============================
 
-1. Install the latest version of Drupal core 6.x into your web server's document root, as usual. We'll call Drupal's path $DRUPAL.
-
-
-2. Move this entire DonorRally directory into [drupal]/profiles/.
-
-
-3. Rename the volunteer_rally directory to "volunteer_rally_install". You should be able to access this file at [drupal]/profiles/donor_rally_install/INSTALL.txt.
-
-
-4. Run the rebuild.sh shell script from within the donor_rally_install directory by typing the following command into the command line from the donor_rally_install directory.
-
+1. Install the latest version of Drupal core 6.x into your web server's document root, as usual. We'll call Drupal's path [drupal].
+2. Move this entire volunteer_rally directory into [drupal]/profiles/. This README file should be located at [drupal]/profiles/volunteer_rally/INSTALL.txt.
+3. Run the rebuild.sh shell script from within the volunteer_rally_install directory by typing the following command into the command line from the volunteer_rally directory.
     ./rebuild.sh
 
-This will download all the modules, themes, and patches needed by Donor Rally.
+   This will download all the modules, themes, and patches needed by Volunteer Rally.
+4. Run Drupal's installer as usual and select the Volunteer Rally installation profile instead of Drupal. (You'll need to fill out the "Configure site" form as usual.)
+5. Once the process completes, you should see the installer's final "Installation complete" message with a link to your home page.
 
-
-Now, run Drupal's installer as usual and select the Volunteer Rally install profile instead of Default:
-
-
-Now you should see the Drupal installer's final "installation complete" with a link to your home page. We hope you enjoy Volunteer Rally!
+We hope you enjoy Volunteer Rally!
