@@ -162,16 +162,16 @@ function volunteer_rally_profile_tasks(&$task, $url) {
     foreach ($types as $type) {
       $theme_settings['toggle_node_info_' . $type] = FALSE;
     }
-
+    $theme_settings['toggle_search'] = 0;
     variable_set('theme_settings', $theme_settings);
 
-    // Set default theme. This needes some more set up on next page load
-    // We cannot do everything here because of _system_theme_data() static cache
-    system_theme_data();
-    db_query("UPDATE {system} SET status = 0 WHERE type = 'theme' AND name ='%s'", 'garland');
+    // Some basic settings for Iggy.
+    $settings = array(
+      'toggle_search' => 0,
+      'default_logo' => 1,
+    );
+    variable_set('theme_iggy_settings', $settings);
     variable_set('theme_default', 'iggy');
-    db_query("UPDATE {system} SET status = 1 WHERE type = 'theme' AND name ='%s'", 'iggy');
-    db_query("UPDATE {blocks} SET status = 0, region = ''"); // disable all DB blocks
 
     // Create roles.
     _volunteer_rally_user_roles();
@@ -461,6 +461,13 @@ function _volunteer_rally_clean() {
   // Since content_profile adds a value for this variable during
   // install, we must delete it here.
   variable_del('content_profile_profile');
+
+  // Set default theme. This needes some more set up on next page load
+  // We cannot do everything here because of _system_theme_data() static cache
+  system_theme_data();
+  db_query("UPDATE {system} SET status = 0 WHERE type = 'theme' AND name ='%s'", 'garland');
+  db_query("UPDATE {system} SET status = 1 WHERE type = 'theme' AND name ='%s'", 'iggy');
+  db_query("UPDATE {blocks} SET status = 0, region = ''"); // disable all DB blocks
 
   // Rebuild key tables/caches
   module_rebuild_cache(); // Detects the newly added bootstrap modules
