@@ -427,7 +427,6 @@ function _volunteer_rally_modules() {
     'userreference',
 
     // Volunteer Rally features.
-    'shift_restrictions',
     'shift_signup',
     'shift_signup_group',
     'shift_signup_group_address',
@@ -436,7 +435,6 @@ function _volunteer_rally_modules() {
     'shift_signup_notifications',
     'staff_notes',
     'volunteer_profiles',
-    'volunteer_rally_day_descriptions',
     'volunteer_shifts',
     'volunteer_shifts_priority_capacity',
     'volunteer_shifts_repeating',
