@@ -436,7 +436,6 @@ function _volunteer_rally_modules() {
     'staff_notes',
     'volunteer_profiles',
     'volunteer_shifts',
-    'volunteer_shifts_priority_capacity',
     'volunteer_shifts_repeating',
 
     // Theme
