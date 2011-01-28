@@ -49,6 +49,8 @@ projects[cck][version] = "2.8"
 
 projects[cck_signup][subdir] = "contrib"
 projects[cck_signup][version] = "1.0-alpha4"
+; http://drupal.org/node/1039274#comment-4013828
+projects[cck_signup][patch][] = "http://drupal.org/files/issues/cck_signup.1039274-6.patch"
 
 projects[content_profile][subdir] = "contrib"
 projects[content_profile][version] = "1.0"
