@@ -10,13 +10,14 @@
 function volunteer_rally_profile_modules() {
   $modules = array(
     // Drupal core modules.
-    'help', 'menu', 'taxonomy', 'dblog', 'path', 'search',
+    'color', 'help', 'menu', 'taxonomy', 'dblog', 'path', 'search',
 
     // Contributed modules.
     'advanced_help',
     'better_formats',
     'ctools',
     'content',
+    'designkit',
 
     // Date modules.
     'date_api', 'date_timezone', 'date', 'date_repeat', 'date_popup',

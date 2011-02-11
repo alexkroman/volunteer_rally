@@ -70,6 +70,9 @@ projects[date][patch][] = "http://drupal.org/files/issues/385688_related_table_f
 projects[date_single_day][subdir] = "contrib"
 projects[date_single_day][version] = "1.2"
 
+projects[designkit][subdir] = "contrib"
+projects[designkit][version] = "1.0-beta1"
+
 projects[editablefields][subdir] = "contrib"
 projects[editablefields][version] = "2.0"
 
