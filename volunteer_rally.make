@@ -79,6 +79,12 @@ projects[editablefields][version] = "2.0"
 projects[features][subdir] = "contrib"
 projects[features][version] = "1.0"
 
+projects[imageapi][subdir] = "contrib"
+projects[imageapi][version] = "1.9"
+
+projects[imagecache][subdir] = "contrib"
+projects[imagecache][version] = "2.0-beta10"
+
 projects[jquery_ui][subdir] = "contrib"
 projects[jquery_ui][version] = "1.4"
 

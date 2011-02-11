@@ -22,6 +22,8 @@ function volunteer_rally_profile_modules() {
     // Date modules.
     'date_api', 'date_timezone', 'date', 'date_repeat', 'date_popup',
 
+    'imageapi',
+    'imagecache',
     'features',
     'pathauto',
 
