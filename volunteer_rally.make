@@ -79,9 +79,6 @@ projects[features][version] = "1.0"
 projects[jquery_ui][subdir] = "contrib"
 projects[jquery_ui][version] = "1.4"
 
-projects[less][subdir] = "contrib"
-projects[less][version] = "2.4"
-
 projects[messaging][subdir] = "contrib"
 projects[messaging][version] = "2.3"
 
@@ -173,6 +170,7 @@ projects[zen][patch][] = "http://drupal.org/files/issues/634552-63-context-confl
 projects[doune][type] = "theme"
 projects[doune][download][type] = "git"
 projects[doune][download][url] = "git://github.com/opensourcery/doune.git"
+projects[doune][download][branch] = "DRUPAL-6--2"
 
 projects[iggy][type] = "theme"
 projects[iggy][download][type] = "git"

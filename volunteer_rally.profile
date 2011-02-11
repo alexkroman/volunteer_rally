@@ -438,9 +438,6 @@ function _volunteer_rally_modules() {
     'volunteer_shifts',
     'volunteer_shifts_repeating',
 
-    // Theme
-    'less',
-
     // Admin section.
     'admin',
     'os_admin',
