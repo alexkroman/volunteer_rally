@@ -385,6 +385,9 @@ function _volunteer_rally_core() {
 
   // Add sign-in/logout link to primary.
   _volunteer_rally_menu_items();
+
+  // Placeholder About page.
+  _volunteer_rally_create_nodes();
 }
 
 /**
@@ -494,7 +497,7 @@ function _volunteer_rally_menu_items() {
     'search' => t('Search'),
     'admin/user/user/create' => t('Create new user'),
   );
-  $weight = 10;
+  $weight = 42;
   foreach ($primary as $path => $title) {
     $link = array(
       'menu_name'     => 'primary-links',
@@ -545,6 +548,30 @@ function _volunteer_rally_menu_items() {
     $return = menu_link_save($link);
     $weight += 10;
   }
+}
+
+/**
+ * Create placeholder About node.
+ */
+function _volunteer_rally_create_nodes() {
+  $node = new stdClass;
+  $node->uid = 1;
+  $node->status = 1;
+  $node->type = 'page';
+  $node->title = st('About');
+  $node->body = st('Placeholder about page to be edited for your organization.');
+
+  // Need to fake uid 1 in order to add a node path.
+  global $user;
+  $user->uid = 1;
+  $node->path = 'about';
+
+  // Menu entry.
+  $node->menu['link_title'] = st('About');
+  $node->menu['menu_name'] = 'primary-links';
+  $node->menu['weight'] = 42;
+
+  node_save($node);
 }
 
 /**
