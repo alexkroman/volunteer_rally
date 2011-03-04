@@ -65,7 +65,7 @@ function volunteer_rally_profile_details() {
  *   task list.
  */
 function volunteer_rally_profile_task_list() {
-  $tasks['volunteer-management-modules-batch'] = st('Install Volunteer Rally modules');
+  $tasks['volunteer-rally-modules-batch'] = st('Install Volunteer Rally modules');
   return $tasks;
 }
 
@@ -168,14 +168,6 @@ function volunteer_rally_profile_tasks(&$task, $url) {
     $theme_settings['toggle_search'] = 0;
     variable_set('theme_settings', $theme_settings);
 
-    // Some basic settings for Iggy.
-    $settings = array(
-      'toggle_search' => 0,
-      'default_logo' => 1,
-    );
-    variable_set('theme_iggy_settings', $settings);
-    variable_set('theme_default', 'iggy');
-
     // Create roles.
     _volunteer_rally_user_roles();
     // Assign sensible input filter defaults to roles.
@@ -187,17 +179,27 @@ function volunteer_rally_profile_tasks(&$task, $url) {
     // Core configuration and tweaks.
     _volunteer_rally_core();
 
-    $task = 'volunteer-management-modules';
+    $task = 'volunteer-rally-modules';
  }
 
   // We are running a batch task for this profile so basically do
   // nothing and return page.
-  if (in_array($task, array('volunteer-management-modules-batch'))) {
+  if (in_array($task, array('volunteer-rally-modules-batch'))) {
     include_once 'includes/batch.inc';
     $output = _batch_page();
   }
 
-  if ($task == 'volunteer-management-modules') {
+  if ($task == 'volunteer-rally-modules') {
+    // Some basic settings for Iggy.
+    $settings = array(
+      'toggle_search' => 0,
+      'default_logo' => 1,
+    );
+    variable_set('theme_iggy_settings', $settings);
+    variable_set('theme_default', 'iggy');
+    // @TODO, there should be a better way to do this.
+    variable_set('designkit_color', array('primary' => "#38393A"));
+
     $modules = _volunteer_rally_modules();
     $files = module_rebuild_cache();
     // Create batch
@@ -211,7 +213,7 @@ function volunteer_rally_profile_tasks(&$task, $url) {
 
     // Start a batch, switch to 'intranet-modules-batch' task. We need to
     // set the variable here, because batch_process() redirects.
-    variable_set('install_task', 'volunteer-management-modules-batch');
+    variable_set('install_task', 'volunteer-rally-modules-batch');
     batch_set($batch);
     batch_process($url, $url);
     // Jut for cli installs. We'll never reach here on interactive installs.
