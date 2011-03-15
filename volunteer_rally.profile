@@ -561,7 +561,11 @@ function _volunteer_rally_create_nodes() {
   $node->status = 1;
   $node->type = 'page';
   $node->title = st('About');
-  $node->body = st('Placeholder about page to be edited for your organization.');
+
+  // Node body stored separately.
+  include_once dirname(__FILE__) . '/includes/about.inc';
+  $node->body = _volunteer_rally_about_node();
+  $node->format = 2;
 
   // Need to fake uid 1 in order to add a node path.
   global $user;
