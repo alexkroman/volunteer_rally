@@ -173,11 +173,12 @@ projects[zen][patch][] = "http://drupal.org/files/issues/634552-63-context-confl
 projects[doune][type] = "theme"
 projects[doune][download][type] = "git"
 projects[doune][download][url] = "git://github.com/opensourcery/doune.git"
-projects[doune][download][branch] = "DRUPAL-6--2"
+projects[doune][download][tag] = "6.x-2.0-alpha1"
 
 projects[iggy][type] = "theme"
 projects[iggy][download][type] = "git"
 projects[iggy][download][url] = "git://github.com/opensourcery/iggy.git"
+projects[iggy][download][tag] = "6.x-1.0-alpha1"
 
 ; Libraries
 libraries[jquery_ui][download][type] = "get"
