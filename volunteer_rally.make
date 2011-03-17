@@ -6,9 +6,7 @@ core = 6.x
 api = 2
 
 ; Volunteer Rally Features
-projects[volunteer_rally_features][type] = "module"
-projects[volunteer_rally_features][download][type] = "git"
-projects[volunteer_rally_features][download][url] = "git://github.com/opensourcery/volunteer_rally_features.git"
+projects[volunteer_rally_features][version] = "1.0-alpha1"
 
 ; Contrib projects
 projects[advanced_help][subdir] = "contrib"
