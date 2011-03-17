@@ -35,6 +35,7 @@ projects[drupal][version] = "6.20"\n
 projects[volunteer_rally][type] = "profile"\n
 projects[volunteer_rally][download][type] = "git"\n
 projects[volunteer_rally][download][url] = "git@github.com:opensourcery/volunteer_rally.git"
+projects[volunteer_rally][download][tag] = "6.x-1.0-alpha1"
 EOF
 )
 
