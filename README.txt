@@ -1,6 +1,6 @@
 **Note**
 
-Development has moved back to Drupal.org[1]
+Development has moved back to [Drupal.org][1]
 
 [1] http://drupal.org/project/volunteer_rally
 
